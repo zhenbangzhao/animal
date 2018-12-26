@@ -6,25 +6,27 @@
 </head>
 <body>
     <table>
-        <tr>
+        <tr bgcolor="aqua">
             <td>宠物名</td>
             <td>宠物编号</td>
             <td>宠物性别</td>
             <td>宠物年龄</td>
             <td>种类</td>
+            <td>操作</td>
+
 
         </tr>
 
         {% for pet in pets %}
         <tr>
-            <td>{{pet.petName}}{{disable}}</td>
-            <td>{{pet.petId}}</td>
-            <td>{{pet.gender}}</td>
-            <td>{{pet.year}}</td>
-            <td>{{pet.kind}}</td>
+            <td bgcolor="#ff7f50">{{pet.petName}}{{disable}}</td>
+            <td bgcolor="#ff8c00">{{pet.petId}}</td>
+            <td bgcolor="#deb887">{{pet.gender}}</td>
+            <td bgcolor="#daa520">{{pet.year}}</td>
+            <td bgcolor="#8a2be2">{{pet.kind}}</td>
 
-            <td><a href="/petlist/{{ pet.id }}">删除</a></td>
-            <td><a href="{% url 'editpet' %}?id={{ pet.id }}">修改</a></td>
+            <td bgcolor="red"><a href="/petlist/{{ pet.id }}">删除</a></td>
+            <td bgcolor="red"><a href="{% url 'editpet' %}?id={{ pet.id }}">修改</a></td>
 
         </tr>
         {% empty %}

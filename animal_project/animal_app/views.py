@@ -95,8 +95,8 @@ def delpet(request, id):
         # logger.info("id=====" + pid)
         # return render(request, 'petlist.html', {'pets': pets})
     models.pet.objects.filter(id=id).delete()
-
-    print('456456456')
+    logger = logging.getLogger('django')
+    logger.info('删除成功。。。')
     return redirect(reverse('petlist'))
 
 
