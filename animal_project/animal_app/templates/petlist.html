@@ -23,7 +23,7 @@
             <td>{{pet.year}}</td>
             <td>{{pet.kind}}</td>
 
-            <td><a href="{% url 'petlist' %}?id={{ pet.id }}">删除</a></td>
+            <td><a href="/petlist/{{ pet.id }}">删除</a></td>
             <td><a href="{% url 'editpet' %}?id={{ pet.id }}">修改</a></td>
 
         </tr>

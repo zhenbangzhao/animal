@@ -48,6 +48,7 @@ def addPet(request):
             newPet.year = data['year']
             newPet.kind = data['kind']
             newPet.save()
+            print('123123123')
             return redirect(reverse('petlist'))
         else:
             return render(request, 'addpet.html', {'form': petform})
@@ -87,33 +88,16 @@ def editPet(request):
             return render(request, 'editpet.html', {'pet': petform, 'id': id})
 
 
-def petsin(request):
-    Pets = pet.objects.all()
-    id = request.GET['id']
-    new = models.pet.objects.get(pk=int(id))
-    values = {
-        'petName': new.petName,
-        'petId': new.petId,
-        'gender': new.gender,
-        'year': new.year,
-        'kind': new.kind,
-
-    }
-    return render(request, 'pet.html', {'values': values, })
-
-
 def delpet(request, id):
-    if request.method == 'GET':
-        # id = request.GET.get('id')
-        logger = logging.getLogger("django")
-        logger.info("id=====" + id)
-        # 删除
-        try:
-            res = models.pet.objects.filter(id=id).delete()
+    # if request.method == 'GET':
+    # pid = request.GET.get[id]
+        # logger = logging.getLogger("django")
+        # logger.info("id=====" + pid)
         # return render(request, 'petlist.html', {'pets': pets})
-        except:
-            return HttpResponse(res)
-        return render(reverse('petlist'))
+    models.pet.objects.filter(id=id).delete()
+
+    print('456456456')
+    return redirect(reverse('petlist'))
 
 
 def register(request):

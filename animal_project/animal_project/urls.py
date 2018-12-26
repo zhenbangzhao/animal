@@ -24,4 +24,6 @@ urlpatterns = [
     path('login/', views.login, name='login'),
     path('register/', views.register, name='register'),
     path('output/', views.output, name='output'),
+    path('petlist/<int:id>/', views.delpet, name='delpet')
+
 ]
