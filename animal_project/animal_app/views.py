@@ -8,22 +8,29 @@ from .petForms import weekForm
 from django.urls import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render
+from django.core.mail import send_mail
+
+import xlwt
+from io import StringIO, BytesIO
+
+import logging
 
 
 def petlist(request):
     pets = models.pet.objects.all()
-    paginator = Paginator(pets, 3)
-    page = request.GET.get('page')
+    # paginator = Paginator(pets, 3)
+    # page = request.GET.get('page')
     # currentPage = int(page)
 
-    try:
-        pets = paginator.page(page)
-    except PageNotAnInteger:
-        pets = paginator.page(1)
-    except EmptyPage:
-        pets = paginator.page(paginator.num_pages)
+    # try:
+        # pets = paginator.page(page)
+    # except PageNotAnInteger:
+        # pets = paginator.page(1)
+    # except EmptyPage:
+        # pets = paginator.page(paginator.num_pages)
 
-    return render(request, 'petlist.html', locals())
+    # return render(request, 'petlist.html', locals())
+    return render(request, 'petlist.html', {'pets': pets})
 
 
 def addPet(request):
@@ -57,7 +64,7 @@ def editPet(request):
                 'gender': pets.gender,
                 'year': pets.year,
                 'kind': pets.kind,
-            }             # 给需要修改的宠物添加初始属性
+            }
         )
         return render(request, 'editpet.html', {'pet': petform, 'id': id})
 
@@ -95,13 +102,18 @@ def petsin(request):
     return render(request, 'pet.html', {'values': values, })
 
 
-def delpet(request):
+def delpet(request, id):
     if request.method == 'GET':
-        id = request.GET.get('id')
-        pets = models.pet.objects.get(pk=int(id))
-        pets.save()
-        pets = models.pet.objects.all().filter(isDelete=True)
-        return render(request, 'petlist.html', {'pets': pets})
+        # id = request.GET.get('id')
+        logger = logging.getLogger("django")
+        logger.info("id=====" + id)
+        # 删除
+        try:
+            res = models.pet.objects.filter(id=id).delete()
+        # return render(request, 'petlist.html', {'pets': pets})
+        except:
+            return HttpResponse(res)
+        return render(reverse('petlist'))
 
 
 def register(request):
@@ -152,3 +164,46 @@ def login(request):
             return render(request, 'login.html', {'form': loginform})
     else:
         return redirect('https://www.zhihu.com/')
+
+
+def output(request):
+    response = HttpResponse(content_type='application/vnd.ms-excel')
+    response['Content-Disposition'] = 'attachment;filename=user.xls'
+    wb = xlwt.Workbook(encoding='utf-8')
+    sheet = wb.add_sheet(u'宠物表单')
+    #1st line
+    sheet.write(0, 0, 'ID')
+    sheet.write(0, 1, 'petName')
+    sheet.write(0, 2, 'pId')
+    sheet.write(0, 3, 'gender')
+    sheet.write(0, 4, 'year')
+    sheet.write(0, 5, 'kind')
+
+    data = models.pet.objects.all()
+    excel_row = 1
+    for item in data:
+        id = item.id
+        petName = item.petName
+        petId = item.petId
+        gender = item.gender
+        year = item.year
+        kind = item.kind
+        sheet.write(excel_row, 0, id)
+        sheet.write(excel_row, 1, petName)
+        sheet.write(excel_row, 2, petId)
+        sheet.write(excel_row, 3, gender)
+        sheet.write(excel_row, 4, year)
+        sheet.write(excel_row, 5, kind)
+        excel_row += 1
+
+    wb.save('pet.xls')
+    output = BytesIO()
+    wb.save(output)
+    output.seek(0)
+    response.write(output.getvalue())
+    return response
+
+
+def down(request):
+    return render(request, 'download.html')
+

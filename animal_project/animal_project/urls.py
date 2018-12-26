@@ -23,4 +23,5 @@ urlpatterns = [
     path('editpet/', views.editPet, name='editpet'),
     path('login/', views.login, name='login'),
     path('register/', views.register, name='register'),
+    path('output/', views.output, name='output'),
 ]

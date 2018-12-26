@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>宠物管理系统</title>
+    <title>宠物系统</title>
 </head>
 <body>
     <table>
@@ -23,7 +23,7 @@
             <td>{{pet.year}}</td>
             <td>{{pet.kind}}</td>
 
-            <td><a href="">删除</a></td>
+            <td><a href="{% url 'petlist' %}?id={{ pet.id }}">删除</a></td>
             <td><a href="{% url 'editpet' %}?id={{ pet.id }}">修改</a></td>
 
         </tr>
@@ -35,6 +35,15 @@
     </table>
 
     <a href="{% url 'addPet' %}">添加新宠物</a>
+    <div>
+        <span>
+           总共：
+        </span>
+
+        <span>
+             <p><a href="/output">导出csv</a></p>
+        </span>
+    </div>
 
 
  <ul class="pagination" id="pager">
