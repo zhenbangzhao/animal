@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+</head>
+<body>
+    <form action="" method="POST">
+        {% csrf_token %}
+
+        <a href="{% url 'register' %}">没有账号？去注册</a><br>
+
+
+        用户名：{{form.userName}}<br>
+        密  码：{{form.password}}<br>{{error}}<br>
+
+        <input type="submit" value="登录">
+
+
+    </form>
+
+
+</body>
+</html>

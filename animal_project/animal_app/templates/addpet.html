@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加宠物信息</title>
+</head>
+<body>
+
+    <form action="" method="POST">
+            {% csrf_token %}
+             <input type="hidden" name="id" value="{{ id }}">
+            宠物名：{{form.petName}}<br>
+            宠物编号：{{form.petId}}<br>
+            宠物性别：{{form.gender}}<br>
+            年 龄：{{form.year}}<br>
+            种类：{{form.kind}}<br>
+
+            <input type="submit" value="增加宠物">
+    </form>
+
+</body>
+</html>

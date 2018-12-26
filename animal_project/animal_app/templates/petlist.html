@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>宠物管理系统</title>
+</head>
+<body>
+    <table>
+        <tr>
+            <td>宠物名</td>
+            <td>宠物编号</td>
+            <td>宠物性别</td>
+            <td>宠物年龄</td>
+            <td>种类</td>
+
+        </tr>
+
+        {% for pet in pets %}
+        <tr>
+            <td>{{pet.petName}}{{disable}}</td>
+            <td>{{pet.petId}}</td>
+            <td>{{pet.gender}}</td>
+            <td>{{pet.year}}</td>
+            <td>{{pet.kind}}</td>
+
+            <td><a href="">删除</a></td>
+            <td><a href="{% url 'editpet' %}?id={{ pet.id }}">修改</a></td>
+
+        </tr>
+        {% empty %}
+
+        没有宠物信息
+
+        {% endfor %}
+    </table>
+
+    <a href="{% url 'addPet' %}">添加新宠物</a>
+
+
+ <ul class="pagination" id="pager">
+
+        {% if pets.has_previous %}
+
+            <li class="previous"><a href="/?page={{ pets.previous_page_number }}">上一页</a></li>
+        {% else %}
+
+            <li class="previous disabled"><a href="#">上一页</a></li>
+        {% endif %}
+
+        {% for num in paginator.page_range %}
+
+            {% if num == currentPage %}
+                <li class="item active"><a href="/?page={{ num }}">{{ num }}</a></li>
+            {% else %}
+                <li class="item"><a href="/?page={{ num }}">{{ num }}</a></li>
+
+            {% endif %}
+        {% endfor %}
+
+        {% if pets.has_next %}
+            <li class="next"><a href="/?page={{ pets.next_page_number }}">下一页</a></li>
+        {% else %}
+            <li class="next disabled"><a href="#">下一页</a></li>
+        {% endif %}
+        {# 下一页按钮结束#}
+    </ul>
+
+
+</body>
+</html>
