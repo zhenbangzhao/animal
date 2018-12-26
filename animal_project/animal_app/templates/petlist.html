@@ -13,10 +13,7 @@
             <td>宠物年龄</td>
             <td>种类</td>
             <td>操作</td>
-
-
         </tr>
-
         {% for pet in pets %}
         <tr>
             <td bgcolor="#ff7f50">{{pet.petName}}{{disable}}</td>
@@ -24,18 +21,13 @@
             <td bgcolor="#deb887">{{pet.gender}}</td>
             <td bgcolor="#daa520">{{pet.year}}</td>
             <td bgcolor="#8a2be2">{{pet.kind}}</td>
-
             <td bgcolor="red"><a href="/petlist/{{ pet.id }}">删除</a></td>
             <td bgcolor="red"><a href="{% url 'editpet' %}?id={{ pet.id }}">修改</a></td>
-
         </tr>
         {% empty %}
-
         没有宠物信息
-
         {% endfor %}
     </table>
-
     <a href="{% url 'addPet' %}">添加新宠物</a>
     <div>
         <span>
@@ -46,28 +38,19 @@
              <p><a href="/output">导出csv</a></p>
         </span>
     </div>
-
-
  <ul class="pagination" id="pager">
-
         {% if pets.has_previous %}
-
             <li class="previous"><a href="/?page={{ pets.previous_page_number }}">上一页</a></li>
         {% else %}
-
             <li class="previous disabled"><a href="#">上一页</a></li>
         {% endif %}
-
         {% for num in paginator.page_range %}
-
             {% if num == currentPage %}
                 <li class="item active"><a href="/?page={{ num }}">{{ num }}</a></li>
             {% else %}
                 <li class="item"><a href="/?page={{ num }}">{{ num }}</a></li>
-
             {% endif %}
         {% endfor %}
-
         {% if pets.has_next %}
             <li class="next"><a href="/?page={{ pets.next_page_number }}">下一页</a></li>
         {% else %}
@@ -75,7 +58,5 @@
         {% endif %}
         {# 下一页按钮结束#}
     </ul>
-
-
 </body>
 </html>

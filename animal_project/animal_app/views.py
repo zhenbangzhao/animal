@@ -140,7 +140,7 @@ def login(request):
                 obj = UserModel.objects.get(userName=userName)
                 request.session['id'] = obj.id
                 request.session['username'] = obj.userName
-                return render(request, 'loginsuc.html')
+                return render(request, 'petlist.html')
             else:
                 error = '用户名或者密码输入有误.'
                 return render(request, 'login.html', {'form': loginform, 'error': error})
